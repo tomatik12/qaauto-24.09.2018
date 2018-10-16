@@ -41,7 +41,6 @@ public class BadCodeExample {
                 System.out.print("SearchTern" + searchTern + "was NOT found");
             }
 
-
         }
 
     }
