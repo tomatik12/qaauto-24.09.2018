@@ -45,16 +45,27 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage(webDriver);
 
         Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/", "Login page URL is wrong");
+        Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Войти или зарегистрироваться",
+                "Login page title is wrong");
+        Assert.assertTrue(loginPage.signInButton.isDisplayed(), "SignInButton is not displayed on Login page.");
 
         loginPage.login("melnyktoma.92@gmail.com", "malyavo4ka");
 
         Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/feed/", "Home page URL is wrong");
+        Assert.assertEquals(webDriver.getTitle(), "LinkedIn",
+                "Home page title is wrong");
+
+        HomePage homePage = new HomePage(webDriver);
+        
+        Assert.assertTrue(homePage.profileNavItem.isDisplayed(), "profileNavItem is not displayed on Login page.");
+
+
 
     }
 
     @Test
 
-    public void negativeLoginTest(){
+    public void negativeLoginWithEmptyPasswordTest(){
 
         webDriver.get("https://www.linkedin.com/");
 
@@ -69,7 +80,7 @@ public class LoginTest {
 
     @Test
 
-    public void negativeLoginTest2(){
+    public void negativeWrongPasswordTest(){
 
         webDriver.get("https://www.linkedin.com/");
 
@@ -79,7 +90,8 @@ public class LoginTest {
 
         loginPage.login("melnyktoma.92@gmail.com", "melnyk");
 
-        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/",
+        Assert.assertEquals(webDriver.getCurrentUrl(),
+                "https://www.linkedin.com/uas/login-submit?loginSubmitSource=GUEST_HOME",
                 "Login-submit page URL is wrong");
     }
 }
