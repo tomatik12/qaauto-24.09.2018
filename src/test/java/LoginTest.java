@@ -13,11 +13,13 @@ public class LoginTest {
 
     @BeforeMethod
     public void beforeMethod(){
-         webDriver = new FirefoxDriver();
+
+        webDriver = new FirefoxDriver();
     }
 
     @AfterMethod
     public void afterMethod(){
+
         webDriver.quit();
     }
 
@@ -56,20 +58,30 @@ public class LoginTest {
 
         webDriver.get("https://www.linkedin.com/");
 
-        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/", "Login page URL is wrong");
-
-        WebElement userEmailField = webDriver.findElement(By.id("login-email"));
-        WebElement userPasswordField = webDriver.findElement(By.id("login-password"));
-        WebElement signInButton = webDriver.findElement(By.id("login-submit"));
-
-        userEmailField.sendKeys("a@b.c");
-        userPasswordField.sendKeys("");
-        signInButton.click();
+        LoginPage loginPage = new LoginPage(webDriver);
 
         Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/", "Login page URL is wrong");
 
+        loginPage.login("a@b.c", "");
 
+        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/", "Login page URL is wrong");
     }
 
+    @Test
 
+    public void negativeLoginTest2(){
+
+        webDriver.get("https://www.linkedin.com/");
+
+        LoginPage loginPage = new LoginPage(webDriver);
+
+        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/", "Login page URL is wrong");
+
+        loginPage.login("melnyktoma.92@gmail.com", "melnyk");
+
+        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/",
+                "Login-submit page URL is wrong");
+    }
 }
+
+
