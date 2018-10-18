@@ -44,10 +44,8 @@ public class LoginTest {
         webDriver.get("https://www.linkedin.com/");
         LoginPage loginPage = new LoginPage(webDriver);
 
-        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/", "Login page URL is wrong");
-        Assert.assertEquals(webDriver.getTitle(), "LinkedIn: Войти или зарегистрироваться",
-                "Login page title is wrong");
-        Assert.assertTrue(loginPage.signInButton.isDisplayed(), "SignInButton is not displayed on Login page.");
+
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded.");
 
         loginPage.login("melnyktoma.92@gmail.com", "malyavo4ka");
 
@@ -56,10 +54,8 @@ public class LoginTest {
                 "Home page title is wrong");
 
         HomePage homePage = new HomePage(webDriver);
-        
-        Assert.assertTrue(homePage.profileNavItem.isDisplayed(), "profileNavItem is not displayed on Login page.");
 
-
+        //Assert.assertTrue(homePage.profileNavItem.isDisplayed(),//"profileNavItem is not displayed on Login page.");
 
     }
 
