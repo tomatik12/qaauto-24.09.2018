@@ -43,19 +43,10 @@ public class LoginTest {
 
         webDriver.get("https://www.linkedin.com/");
         LoginPage loginPage = new LoginPage(webDriver);
-
-
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded.");
-
         loginPage.login("melnyktoma.92@gmail.com", "malyavo4ka");
-
-        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/feed/", "Home page URL is wrong");
-        Assert.assertEquals(webDriver.getTitle(), "LinkedIn",
-                "Home page title is wrong");
-
         HomePage homePage = new HomePage(webDriver);
-
-        //Assert.assertTrue(homePage.profileNavItem.isDisplayed(),//"profileNavItem is not displayed on Login page.");
+        Assert.assertTrue(homePage.isHomePageLoaded(),"Home Page is not loaded.");
 
     }
 
@@ -64,14 +55,10 @@ public class LoginTest {
     public void negativeLoginWithEmptyPasswordTest(){
 
         webDriver.get("https://www.linkedin.com/");
-
         LoginPage loginPage = new LoginPage(webDriver);
-
-        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/", "Login page URL is wrong");
-
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded.");
         loginPage.login("a@b.c", "");
-
-        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/", "Login page URL is wrong");
+        Assert.assertTrue(loginPage.isPageLoaded(),"Login Page is not loaded.");
     }
 
     @Test
@@ -79,16 +66,34 @@ public class LoginTest {
     public void negativeWrongPasswordTest(){
 
         webDriver.get("https://www.linkedin.com/");
-
         LoginPage loginPage = new LoginPage(webDriver);
-
-        Assert.assertEquals(webDriver.getCurrentUrl(), "https://www.linkedin.com/", "Login page URL is wrong");
-
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded.");
         loginPage.login("melnyktoma.92@gmail.com", "melnyk");
+        LoginSubmit loginSubmit = new LoginSubmit(webDriver);
+        Assert.assertTrue(loginSubmit.isLoginSubmitLoaded(),"Login Submit is not loaded.");
+    }
 
-        Assert.assertEquals(webDriver.getCurrentUrl(),
-                "https://www.linkedin.com/uas/login-submit?loginSubmitSource=GUEST_HOME",
-                "Login-submit page URL is wrong");
+    @Test
+
+    public void negativeWrongUserEmailTest(){
+
+        webDriver.get("https://www.linkedin.com/");
+        LoginPage loginPage = new LoginPage(webDriver);
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
+        loginPage.login("melnyktoma.92gmail.com", "malyavo4ka");
+        LoginSubmit loginSubmit = new LoginSubmit(webDriver);
+        Assert.assertTrue(loginSubmit.isLoginSubmitLoaded(),"Login Submit is not loaded.");
+
+    }
+
+    @Test
+
+    public void negativeLoginWithEmptyUserEmailTest(){
+        webDriver.get("https://www.linkedin.com/");
+        LoginPage loginPage = new LoginPage(webDriver);
+        Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
+        loginPage.login("","malyavo4ka");
+        Assert.assertTrue(loginPage.isPageLoaded(),"Login Page is not loaded.");
     }
 }
 

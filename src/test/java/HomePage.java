@@ -10,6 +10,15 @@ public class HomePage {
         this.webDriver = webDriver;
         initElements();
     }
+
+     public boolean isHomePageLoaded () {
+         return webDriver.getCurrentUrl().equals("https://www.linkedin.com/feed/")
+                 && webDriver.getTitle().equals("LinkedIn")
+                 && isProfileNavItemDisplayed();
+     }
+
+    public boolean isProfileNavItemDisplayed(){return profileNavItem.isDisplayed();}
+
     private void initElements(){
         profileNavItem = webDriver.findElement(By.xpath("//li[@id='profile-nav-item']"));
 

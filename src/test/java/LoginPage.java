@@ -6,10 +6,9 @@ import org.testng.Assert;
 public class LoginPage {
 
    private WebDriver webDriver;
-
-    private WebElement userEmailField;
-    private WebElement userPasswordField;
-    private WebElement signInButton;
+   private WebElement userEmailField;
+   private WebElement userPasswordField;
+   private WebElement signInButton;
 
     public LoginPage(WebDriver webDriver) {
         this.webDriver = webDriver;
