@@ -6,16 +6,16 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
 
-   private WebDriver webDriver;
+    private WebDriver webDriver;
 
-   @FindBy(xpath = "//*[@id='login-email']")
-   private WebElement userEmailField;
+    @FindBy(xpath = "//*[@id='login-email']")
+    private WebElement userEmailField;
 
-   @FindBy(xpath = "//*[@id='login-password']")
-   private WebElement userPasswordField;
+    @FindBy(xpath = "//*[@id='login-password']")
+    private WebElement userPasswordField;
 
-   @FindBy(xpath = "//*[@id='login-submit']")
-   private WebElement signInButton;
+    @FindBy(xpath = "//*[@id='login-submit']")
+    private WebElement signInButton;
 
     public LoginPage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -23,7 +23,7 @@ public class LoginPage {
 
     }
 
-    public boolean isPageLoaded () {
+    public boolean isPageLoaded() {
 
         return webDriver.getCurrentUrl().equals("https://www.linkedin.com/")
                 && webDriver.getTitle().equals("LinkedIn: Войти или зарегистрироваться")
@@ -36,11 +36,24 @@ public class LoginPage {
     }
 
 
-
-    public HomePage login(String userEmail, String userPassword){
+    public HomePage login(String userEmail, String userPassword) {
         userEmailField.sendKeys(userEmail);
         userPasswordField.sendKeys(userPassword);
         signInButton.click();
         return new HomePage(webDriver);
+
+    }
+
+    public LoginSubmit login1(String userEmail, String userPassword) {
+        userEmailField.sendKeys(userEmail);
+        userPasswordField.sendKeys(userPassword);
+        signInButton.click();
+        return new LoginSubmit(webDriver);
+    }
+    public LoginPage login2(String userEmail, String userPassword){
+        userEmailField.sendKeys(userEmail);
+        userPasswordField.sendKeys(userPassword);
+        signInButton.click();
+        return new LoginPage(webDriver);
     }
 }

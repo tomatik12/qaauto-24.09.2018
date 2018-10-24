@@ -56,7 +56,7 @@ public class LoginTest {
         webDriver.get("https://www.linkedin.com/");
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded.");
-        loginPage.login("a@b.c", "");
+        LoginPage loginPageWithEmptyPassword = loginPage.login2("a@b.c", "");
         Assert.assertTrue(loginPage.isPageLoaded(),"Login Page is not loaded.");
     }
 
@@ -67,21 +67,21 @@ public class LoginTest {
         webDriver.get("https://www.linkedin.com/");
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded.");
-        loginPage.login("melnyktoma.92@gmail.com", "melnyk");
+        LoginSubmit wrongPassword = loginPage.login1("melnyktoma.92@gmail.com", "melnyk");
         LoginSubmit loginSubmit = new LoginSubmit(webDriver);
-        Assert.assertTrue(loginSubmit.isLoginSubmitLoaded(),"Login Submit is not loaded.");
+        Assert.assertTrue(loginSubmit.isErrorPageLoaded(),"Login Submit is not loaded.");
     }
 
     @Test
 
-    public void negativeWrongUserEmailTest(){
+    public void negativeUserEmailWithoutAtTest(){
 
         webDriver.get("https://www.linkedin.com/");
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
-        loginPage.login("melnyktoma.92gmail.com", "malyavo4ka");
+        LoginSubmit emailWithoutAt = loginPage.login1("melnyktoma.92gmail.com", "malyavo4ka");
         LoginSubmit loginSubmit = new LoginSubmit(webDriver);
-        Assert.assertTrue(loginSubmit.isLoginSubmitLoaded(),"Login Submit is not loaded.");
+        Assert.assertTrue(loginSubmit.isErrorPageLoaded(),"Login Submit is not loaded.");
 
     }
 
@@ -91,8 +91,30 @@ public class LoginTest {
         webDriver.get("https://www.linkedin.com/");
         LoginPage loginPage = new LoginPage(webDriver);
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded");
-        loginPage.login("","malyavo4ka");
+        LoginPage loginPageWithEmptyEmail = loginPage.login2("","malyavo4ka");
         Assert.assertTrue(loginPage.isPageLoaded(),"Login Page is not loaded.");
+    }
+
+    @Test
+
+    public void negativeLoginWithEmptyUserEmailAndEmptyPasswordTest(){
+        webDriver.get("https://www.linkedin.com/");
+        LoginPage loginPage = new LoginPage(webDriver);
+        Assert.assertTrue(loginPage.isPageLoaded(),"Login Page is not loaded");
+        LoginPage emptyFields = loginPage.login2("","");
+        Assert.assertTrue(loginPage.isPageLoaded(),"Login Page is not loaded");
+    }
+
+    @Test
+
+    public void negativeWrongUserEmailTest(){
+        webDriver.get("https://www.linkedin.com/");
+        LoginPage loginPage = new LoginPage(webDriver);
+        Assert.assertTrue(loginPage.isPageLoaded(),"Login Page is not loaded");
+        LoginSubmit wrongEmail = loginPage.login1("melnyk@gmail.com", "malyavo4ka");
+        LoginSubmit loginSubmit = new LoginSubmit(webDriver);
+        Assert.assertTrue(loginSubmit.isErrorPageLoaded(),"Login Submit is not loaded.");
+
     }
 }
 
