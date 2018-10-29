@@ -10,6 +10,7 @@ public class HomePage {
    @FindBy(xpath = "//*li[@id='profile-nav-item']")
    private WebElement profileNavItem;
 
+
     public HomePage(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
