@@ -1,4 +1,3 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -46,13 +45,13 @@ public class LoginPage {
             sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-            ()
+
         }
         if (webDriver.getCurrentUrl().contains("/feed")) {
             return (T) new HomePage(webDriver);
         }
         if (webDriver.getCurrentUrl().contains("/uas/login-submit")) {
-            return (T) new LoginSubmit(webDriver);
+            return (T) new LoginSubmitPage(webDriver);
         } else {
             return (T) new LoginPage(webDriver);
 
