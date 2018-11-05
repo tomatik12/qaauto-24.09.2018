@@ -26,9 +26,7 @@ public class LoginPage {
 
     public boolean isPageLoaded() {
 
-        return webDriver.getCurrentUrl().equals("https://www.linkedin.com/")
-                && webDriver.getTitle().equals("LinkedIn: Войти или зарегистрироваться")
-                && isSignInButtonDisplayed();
+        return webDriver.getCurrentUrl().equals("https://www.linkedin.com/") && webDriver.getTitle().equals("LinkedIn: Войти или зарегистрироваться") && isSignInButtonDisplayed();
     }
 
 
@@ -56,5 +54,20 @@ public class LoginPage {
             return (T) new LoginPage(webDriver);
 
         }
+    }
+
+    public RequestPasswordResetPage clickOnForgotPasswordLink() {
+        try {
+            sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        WebElement forgotPasswordLink;
+        forgotPasswordLink.click();
+        return new RequestPasswordResetPage(webDriver);
+    }
+
+    public boolean isPageLoaded() {
+        return webDriver.getCurrentUrl().equals("https://www.linkedin.com/") && webDriver.getTitle().equals("LinkedIn: Войти или зарегистрироваться") && signInButton.isDisplayed();
     }
 }

@@ -5,6 +5,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 import static java.lang.Thread.sleep;
 
 public class SearchTest {
@@ -47,17 +49,23 @@ public class SearchTest {
 
 
         @Test
-        public void basicSearchTest() {
+        public void basicSearchTest() throws InterruptedException {
+            String searchTerm = "HR";
             Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded.");
             HomePage homePage = loginPage.login(userEmail, userPassword);
-            try {
-                sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Assert.assertTrue(homePage.isHomePageLoaded(),"The home page is not loaded");
-            SearchPage searchPage = homePage.basicSearchTest("HR");
-            Assert.assertTrue(searchPage.isSearchPageLoaded(), "The search page is not loaded");
-            Assert.assertEquals(searchPage.getCountOfResultItem(),10, "The count of items of result search is wrong");
-            Assert.assertTrue(searchPage.searchListTerm("HR"), "List of results doesn't contain an expected term");
-        }}
+            Assert.assertTrue(homePage.isHomePageLoaded(),"The home page is not loaded.");
+            SearchPage searchPage = homePage.search(searchTerm);
+            Assert.assertTrue(searchPage.isSearchPageLoaded(), "Search Page is not loaded.");
+            Assert.assertEquals(searchPage.getSearchResultsCount(), 10, "SearchResults count is wrong.");
+
+
+            List<String> searchResultList = searchPage.getSearchResults();
+
+            for (String searchResult : searchResultList) {
+                Assert.assertTrue(searchResult.toLowerCase().contains(searchTerm.toLowerCase()),
+                        "SearchTerm" +searchTerm+"not found in" +searchResult);
+}
+
+
+        }
+}

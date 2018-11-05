@@ -13,7 +13,7 @@ public class HomePage {
    @FindBy(xpath = "//li[@id='profile-nav-item']")
    private WebElement profileNavItem;
 
-    @FindBy(xpath = "//*[@role = 'combobox']")
+    @FindBy(xpath = "//input[contains(@aria-owns, 'results')]")
     private WebElement searchField;
 
 
@@ -30,20 +30,12 @@ public class HomePage {
 
     public boolean isProfileNavItemDisplayed(){return profileNavItem.isDisplayed();}
 
-    public <T> T basicSearchTest(String searchTerm) {
-        searchField.sendKeys(searchTerm);
-        searchField.sendKeys(Keys.ENTER);
-        try {
-            sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        if (webDriver.getCurrentUrl().contains("search/results")) {
-            return (T) new SearchPage(webDriver);
-        }
-        else
-            return (T) new HomePage(webDriver);
-    }
 
 
+public  SearchPage search(String searchTerm) throws InterruptedException {
+    searchField.sendKeys(searchTerm);
+    searchField.sendKeys(Keys.ENTER);
+    sleep(3000);
+    return  new SearchPage(webDriver);
+}
 }
