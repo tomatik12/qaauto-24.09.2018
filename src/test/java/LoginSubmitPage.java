@@ -18,19 +18,16 @@ public class LoginSubmitPage {
 
 
     public LoginSubmitPage(WebDriver webDriver){
-        this.webDriver=webDriver;
+        this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
     }
 
-    public boolean isErrorPageLoaded(){
-        return webDriver.getCurrentUrl().equals("https://www.linkedin.com/uas/login-submit?loginSubmitSource=GUEST_HOME")
-                && webDriver.getTitle().contains("Войти в LinkedIn")
-                && isErrorMessageDisplayed();
+    public boolean isPageLoaded(){
+        return webDriver.getCurrentUrl().contains("uas/login-submit")
+                &&webDriver.getTitle().contains("LinkedIn: Войти или зарегистрироваться")
+                &&alertBox.isDisplayed();
     }
 
-    public boolean isErrorMessageDisplayed(){
-        return alertBox.isDisplayed();
-    }
 
 
     public String getAlertMessageText() {

@@ -90,7 +90,7 @@ public class LoginTest {
 
         Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded.");
         LoginSubmitPage loginSubmitPage = loginPage.login(userEmail, userPassword);
-        Assert.assertTrue(loginSubmitPage.isErrorPageLoaded(), "Login Submit page is not loaded");
+        Assert.assertTrue(loginSubmitPage.isPageLoaded(), "Login Submit page is not loaded");
 
         Assert.assertEquals(loginSubmitPage.getAlertMessageText(),
                 "При заполнении формы были допущены ошибки. Проверьте и исправьте отмеченные поля.",

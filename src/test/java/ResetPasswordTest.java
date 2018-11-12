@@ -1,28 +1,8 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+
 import static java.lang.Thread.sleep;
-
-public class ResetPasswordTest {
-    private WebDriver webDriver;
-    LoginPage loginPage;
-
-    @BeforeMethod
-    public void beforeMethod() {
-        webDriver = new FirefoxDriver();
-        webDriver.get("https://linkedin.com");
-        loginPage = new LoginPage(webDriver);
-    }
-
-    @AfterMethod
-    public void afterMethod() {
-        webDriver.quit();
-    }
-}
 
 /**
  * PreConditions:
@@ -41,8 +21,10 @@ public class ResetPasswordTest {
  * - Close Browser.
  */
 
-@Test
-public void successfulResetPasswordTest() throws InterruptedException {
+public class ResetPasswordTest extends BaseTest{
+    @Test
+
+    public void successfulResetPasswordTest() throws InterruptedException {
     String newPassword = "malyavo4ka12";
 
     Assert.assertTrue(loginPage.isPageLoaded(),
@@ -50,40 +32,33 @@ public void successfulResetPasswordTest() throws InterruptedException {
 
     RequestPasswordResetPage requestPasswordResetPage =
            loginPage.clickOnForgotPasswordLink();
-    Assert.assertTrue(requestPasswordResetPage.isLoaded(),
-            "RequestPasswordResetPage is not loaded.");
+    Assert.assertTrue(requestPasswordResetPage.isPageLoaded(),
+            "page.RequestPasswordResetPage is not loaded.");
 
-    PasswordResetSubmitPage linkedinPasswordResetSubmitPage =
-            RequestPasswordResetPage.findAccount("melnyktoma.92@gmail.com");
+    PasswordResetSubmitPage passwordResetSubmitPage =
+            requestPasswordResetPage.findAccount("melnyktoma.92@gmail.com");
 
 
     sleep(180000);
-    Assert.assertTrue(PasswordResetSubmitPage.isLoaded(),
-            "PasswordResetSubmitPage is not loaded.");
+    Assert.assertTrue(passwordResetSubmitPage.isPageLoaded(),
+            "page.PasswordResetSubmitPage is not loaded.");
 
 SetNewPasswordPage setNewPasswordPage =
-            linkedinPasswordResetSubmitPage.navigateToLinkFromEmail();
-    Assert.assertTrue(SetNewPasswordPage.isLoaded(),
-            "SetNewPasswordPage is not loaded.");
+            passwordResetSubmitPage.navigateToLinkFromEmail();
+    Assert.assertTrue(setNewPasswordPage.isLoaded(),
+            "page.SetNewPasswordPage is not loaded.");
 
 SuccessfulPasswordResetPage successfulPasswordResetPage =
            setNewPasswordPage.submitNewPassword(newPassword);
 
-    Assert.assertTrue(SuccessfulPasswordResetPage.isLoaded(),
-            "SuccessfulPasswordResetPage is not loaded.");
+    Assert.assertTrue(successfulPasswordResetPage.isLoaded(),
+            "page.SuccessfulPasswordResetPage is not loaded.");
 
     HomePage homePage =
             successfulPasswordResetPage.clickOnGoToHomeButton();
+//sleep(180000);
 
     Assert.assertTrue(homePage.isHomePageLoaded(),
-            "HomePage is not loaded.");
-
-
-}
-
-
-
-
-
+            "page.HomePage is not loaded.");
 }
 }

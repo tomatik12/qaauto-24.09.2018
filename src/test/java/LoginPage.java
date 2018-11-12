@@ -5,7 +5,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import static java.lang.Thread.sleep;
 
-public class LoginPage {
+public class LoginPage extends BasePage {
 
     private WebDriver webDriver;
 
@@ -18,6 +18,9 @@ public class LoginPage {
     @FindBy(xpath = "//*[@id='login-submit']")
     private WebElement signInButton;
 
+    @FindBy(xpath = "//a[@class='link-forgot-password']")
+    private WebElement forgotPasswordLink;
+
     public LoginPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
@@ -25,8 +28,9 @@ public class LoginPage {
     }
 
     public boolean isPageLoaded() {
-
-        return webDriver.getCurrentUrl().equals("https://www.linkedin.com/") && webDriver.getTitle().equals("LinkedIn: Войти или зарегистрироваться") && isSignInButtonDisplayed();
+        return webDriver.getCurrentUrl().equals("https://www.linkedin.com/")
+                && webDriver.getTitle().equals("LinkedIn: Войти или зарегистрироваться")
+                && isSignInButtonDisplayed();
     }
 
 
@@ -57,17 +61,9 @@ public class LoginPage {
     }
 
     public RequestPasswordResetPage clickOnForgotPasswordLink() {
-        try {
-            sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        WebElement forgotPasswordLink;
+        waitUntilElementIsClickable(forgotPasswordLink);
         forgotPasswordLink.click();
         return new RequestPasswordResetPage(webDriver);
     }
 
-    public boolean isPageLoaded() {
-        return webDriver.getCurrentUrl().equals("https://www.linkedin.com/") && webDriver.getTitle().equals("LinkedIn: Войти или зарегистрироваться") && signInButton.isDisplayed();
-    }
 }

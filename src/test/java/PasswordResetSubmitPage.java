@@ -1,4 +1,4 @@
-import com.sun.xml.internal.ws.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -6,9 +6,9 @@ import org.openqa.selenium.support.PageFactory;
 
 import static java.lang.Thread.sleep;
 
-public class PasswordResetSubmitPage {
+public class PasswordResetSubmitPage extends BasePage{
 
-    private final WebDriver webDriver;
+    private WebDriver webDriver;
     @FindBy(xpath = "//button[@id='resend-url']")
     private WebElement resendLinkButton;
 
@@ -17,11 +17,15 @@ public class PasswordResetSubmitPage {
         PageFactory.initElements(webDriver, this);
     }
 
-    public boolean isLoaded(){
-        sleep(5000);
-        return resendLinkButton.isDisplayed()
-                && webDriver.getTitle().contains("Проверьте свою эл. почту и перейдите по безопасной ссылке.")
-                && webDriver.getCurrentUrl().contains("request-password-reset-submit");
+    public boolean isPageLoaded(){
+        try {
+            sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return resendLinkButton.isDisplayed();
+                //&& webDriver.getTitle().contains("Проверьте свою эл. почту и перейдите по безопасной ссылке.")
+                //&& webDriver.getCurrentUrl().contains("request-password-reset-submit");
     }
 
     public SetNewPasswordPage navigateToLinkFromEmail(){
@@ -29,13 +33,12 @@ public class PasswordResetSubmitPage {
         String messageTo = "melnyktoma.92@gmail.com";
         String messageFrom = "security-noreply@linkedin.com";
 
-        Object gMailService;
         String message = gMailService.waitMessage(messageSubject, messageTo, messageFrom, 180);
         System.out.println("Content: " + message);
-        String resetPasswordLink =
-                StringUtils.substringBetween(message,
-                        "To change your LinkedIn password, click <a href=\"",
-                        "\" style").replace("amp;","");
+        String resetPasswordLink = StringUtils.substringBetween(
+                message, "click <a href=\"", "\"").replace("amp;", "");
+        System.out.println(resetPasswordLink);
+        webDriver.get(resetPasswordLink);
 
         System.out.println(resetPasswordLink);
         webDriver.get(resetPasswordLink);

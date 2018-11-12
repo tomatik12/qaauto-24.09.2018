@@ -9,26 +9,8 @@ import java.util.List;
 
 import static java.lang.Thread.sleep;
 
-public class SearchTest {
+public class SearchTest extends BaseTest {
 
-    WebDriver webDriver;
-    LoginPage loginPage;
-    String userEmail = "melnyktoma.92@gmail.com";
-    String userPassword = "malyavo4ka";
-
-    @BeforeMethod
-    public void beforeMethod() {
-
-        webDriver = new FirefoxDriver();
-        webDriver.get("https://www.linkedin.com/");
-        loginPage = new LoginPage(webDriver);
-    }
-
-    @AfterMethod
-    public void afterMethod () {
-
-        webDriver.quit();
-    }
 
     /**
      * PreConditions:
@@ -52,7 +34,7 @@ public class SearchTest {
         public void basicSearchTest() throws InterruptedException {
             String searchTerm = "HR";
             Assert.assertTrue(loginPage.isPageLoaded(), "Login Page is not loaded.");
-            HomePage homePage = loginPage.login(userEmail, userPassword);
+            HomePage homePage = loginPage.login("melnyktoma.92@gmail.com", "malyavo4ka");
             Assert.assertTrue(homePage.isHomePageLoaded(),"The home page is not loaded.");
             SearchPage searchPage = homePage.search(searchTerm);
             Assert.assertTrue(searchPage.isSearchPageLoaded(), "Search Page is not loaded.");
