@@ -6,7 +6,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static java.lang.Thread.sleep;
 
 
 public class LoginTest {
@@ -15,7 +14,6 @@ public class LoginTest {
 
     @BeforeMethod
     public void beforeMethod() {
-
         webDriver = new FirefoxDriver();
         webDriver.get("https://www.linkedin.com/");
         loginPage = new LoginPage(webDriver);
